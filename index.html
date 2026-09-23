@@ -13,8 +13,8 @@
             /* Couleurs */
             --color-text: #2c3e50;          /* bleu nuit : titres, noms d'outils */
             --color-text-muted: #64748b;    /* gris ardoise : sous-titres, descriptions */
-            --color-bg-top: #ffffff;
-            --color-bg-bottom: #f8f9fa;
+            --color-bg-top: #f8fafc;
+            --color-bg-bottom: #eef2f7;
             --color-card: rgba(255, 255, 255, 0.9);
             --color-card-hover: rgba(255, 255, 255, 0.95);
             --color-line: #e2e8f0;          /* filets (remplace le blanc 20 % invisible) */
@@ -53,10 +53,26 @@
         body {
             font-family: var(--font);
             color: var(--color-text);
-            background: linear-gradient(180deg, var(--color-bg-top) 0%, var(--color-bg-bottom) 100%);
+            background: var(--color-bg-top);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+        }
+
+        /* Fond dégradé : halos très doux aux couleurs des rubriques,
+           fixé à l'écran pour rester calme pendant le défilement */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            background:
+                radial-gradient(55rem 35rem at 0% 0%, rgba(37, 99, 235, 0.10), transparent 65%),
+                radial-gradient(45rem 30rem at 100% 10%, rgba(124, 58, 237, 0.08), transparent 65%),
+                radial-gradient(50rem 30rem at 100% 100%, rgba(4, 120, 87, 0.06), transparent 65%),
+                radial-gradient(45rem 30rem at 0% 100%, rgba(194, 65, 12, 0.05), transparent 65%),
+                linear-gradient(180deg, var(--color-bg-top) 0%, var(--color-bg-bottom) 100%);
         }
 
         /* ---------- En-tête ---------- */
@@ -105,8 +121,8 @@
             justify-content: center;
             gap: 0.5rem;
             padding: 0.75rem 1rem;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--color-line);
         }
