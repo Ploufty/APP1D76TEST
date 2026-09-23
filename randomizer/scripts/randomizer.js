@@ -16,6 +16,7 @@
     var confettiLayer = document.getElementById('confettiLayer');
     var isRolling = false;
     var resizeTimer = null;
+    var winnerTimer = null;
 
     function fitApp() {
         var w = viewport.clientWidth || window.innerWidth || BASE_W;
@@ -105,6 +106,7 @@
             return;
         }
 
+        clearTimeout(winnerTimer);
         isRolling = true;
         drawButton.disabled = true;
         resultName.className = 'rolling';
@@ -122,7 +124,7 @@
                 finishDraw(finalName);
                 return;
             }
-            resultName.innerHTML = chooseRandom(names);
+            resultName.textContent = chooseRandom(names);
             var delay = 38 + Math.pow(progress, 2.4) * 190;
             setTimeout(tick, delay);
         }
@@ -130,13 +132,13 @@
     }
 
     function finishDraw(name) {
-        resultName.innerHTML = name;
+        resultName.textContent = name;
         resultName.className = 'winner';
         statusText.innerHTML = 'Résultat du tirage';
         isRolling = false;
         drawButton.disabled = false;
         launchConfetti();
-        setTimeout(function() {
+        winnerTimer = setTimeout(function() {
             resultName.className = '';
         }, 600);
     }

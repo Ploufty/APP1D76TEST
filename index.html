@@ -352,6 +352,32 @@
                 font-size: 2rem;
             }
 
+            /* Navigation sur une seule ligne, qu'on fait défiler du doigt :
+               sa hauteur reste fixe, les titres ne passent pas dessous */
+            .quick-nav {
+                flex-wrap: nowrap;
+                justify-content: flex-start;
+                overflow-x: auto;
+                scrollbar-width: none;
+            }
+
+            .quick-nav::-webkit-scrollbar {
+                display: none;
+            }
+
+            .quick-nav a {
+                flex-shrink: 0;
+            }
+
+            /* Centre les boutons quand ils tiennent sur la largeur */
+            .quick-nav a:first-child {
+                margin-left: auto;
+            }
+
+            .quick-nav a:last-child {
+                margin-right: auto;
+            }
+
             .tool-card {
                 --cols: 2;
             }
@@ -360,6 +386,21 @@
         @media (max-width: 480px) {
             .tool-card {
                 --cols: 1;
+            }
+        }
+
+        /* À l'impression, toutes les cartes sont visibles, sans navigation collante */
+        @media print {
+            .js .reveal,
+            .js .reveal.is-visible {
+                opacity: 1;
+                transform: none;
+                animation: none;
+                transition: none;
+            }
+
+            .quick-nav {
+                position: static;
             }
         }
 
