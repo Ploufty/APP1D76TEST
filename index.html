@@ -4,39 +4,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Apps1D76 - Outils numériques</title>
+    <meta name="description" content="Outils numériques pour l'école primaire - Mission Numérique Éducatif 76">
+    <link rel="preload" href="fonts/bricolage-grotesque-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/nunito-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
     <script>document.documentElement.classList.add('js');</script>
     <style>
         /* ==========================================================
-           Direction artistique Apps1D76 (reprise de la page d'origine)
+           Polices (hébergées dans le site, licence SIL OFL : voir fonts/)
+           ========================================================== */
+        @font-face {
+            font-family: 'Bricolage Grotesque';
+            src: url('fonts/bricolage-grotesque-latin-wght-normal.woff2') format('woff2');
+            font-weight: 200 800;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Nunito';
+            src: url('fonts/nunito-latin-400-normal.woff2') format('woff2');
+            font-weight: 400;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Nunito';
+            src: url('fonts/nunito-latin-600-normal.woff2') format('woff2');
+            font-weight: 600;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Nunito';
+            src: url('fonts/nunito-latin-800-normal.woff2') format('woff2');
+            font-weight: 800;
+            font-display: swap;
+        }
+
+        /* ==========================================================
+           Direction artistique Apps1D76 : « blocs de construction »
+           en bleu, blanc, rouge
            ========================================================== */
         :root {
             /* Couleurs */
-            --color-text: #2c3e50;          /* bleu nuit : titres, noms d'outils */
-            --color-text-muted: #64748b;    /* gris ardoise : sous-titres, descriptions */
-            --color-bg-top: #f8fafc;
-            --color-bg-bottom: #eef2f7;
-            --color-card: rgba(255, 255, 255, 0.9);
-            --color-card-hover: rgba(255, 255, 255, 0.95);
-            --color-line: #e2e8f0;          /* filets (remplace le blanc 20 % invisible) */
-
-            /* Accents par rubrique (contraste ≥ 4,5:1 sur blanc) */
-            --accent-classe: #2563eb;        /* bleu */
-            --accent-classe-soft: #eff6ff;
-            --accent-outils: #7c3aed;        /* violet */
-            --accent-outils-soft: #f5f3ff;
-            --accent-suivi: #047857;         /* vert */
-            --accent-suivi-soft: #ecfdf5;
-            --accent-direction: #c2410c;     /* orange */
-            --accent-direction-soft: #fff7ed;
+            --bleu: #000091;                /* bleu profond : titres forts, bandeau final */
+            --bleu-pale: #e8ecff;           /* bande de rubrique */
+            --bleu-tint: #d5dcff;           /* ronds d'icônes, étiquettes */
+            --rouge: #e1000f;               /* rouge vif : accents */
+            --rouge-pale: #fdeceb;          /* bande de rubrique */
+            --rouge-tint: #fbd5d3;
+            --creme: #faf7f2;               /* blanc chaud du fond */
+            --blanc: #ffffff;
+            --encre: #161a3a;               /* texte principal */
+            --encre-douce: #4b5170;         /* texte secondaire */
 
             /* Typographie */
-            --font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --font-titre: 'Bricolage Grotesque', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --font-texte: 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
             /* Formes et ombres */
-            --radius-card: 12px;
-            --radius-small: 8px;
-            --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
+            --radius-bloc: 28px;
+            --radius-pill: 999px;
+            --shadow: 0 2px 0 rgba(22, 26, 58, 0.06), 0 10px 30px rgba(22, 26, 58, 0.06);
+            --shadow-hover: 0 4px 0 rgba(22, 26, 58, 0.06), 0 18px 40px rgba(22, 26, 58, 0.12);
             --transition: all 0.3s ease;
         }
 
@@ -51,64 +80,161 @@
         }
 
         body {
-            font-family: var(--font);
-            color: var(--color-text);
-            background: var(--color-bg-top);
+            font-family: var(--font-texte);
+            color: var(--encre);
+            background: var(--creme);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            overflow-x: hidden;
         }
 
-        /* Fond dégradé : halos très doux aux couleurs des rubriques,
-           fixé à l'écran pour rester calme pendant le défilement */
-        body::before {
-            content: "";
-            position: fixed;
-            inset: 0;
-            z-index: -1;
-            pointer-events: none;
+        h1, h2, h3 {
+            font-family: var(--font-titre);
+            letter-spacing: -0.02em;
+        }
+
+        /* Petite étiquette en capitales au-dessus des titres */
+        .eyebrow {
+            font-family: var(--font-texte);
+            font-weight: 800;
+            font-size: 0.85rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* ---------- En-tête : texte + composition de blocs ---------- */
+        .hero {
+            position: relative;
+            padding: 3.5rem 0 4rem;
             background:
-                radial-gradient(55rem 35rem at 0% 0%, rgba(37, 99, 235, 0.10), transparent 65%),
-                radial-gradient(45rem 30rem at 100% 10%, rgba(124, 58, 237, 0.08), transparent 65%),
-                radial-gradient(50rem 30rem at 100% 100%, rgba(4, 120, 87, 0.06), transparent 65%),
-                radial-gradient(45rem 30rem at 0% 100%, rgba(194, 65, 12, 0.05), transparent 65%),
-                linear-gradient(180deg, var(--color-bg-top) 0%, var(--color-bg-bottom) 100%);
+                radial-gradient(40rem 28rem at 0% 0%, rgba(0, 0, 145, 0.07), transparent 65%),
+                radial-gradient(36rem 26rem at 100% 100%, rgba(225, 0, 15, 0.06), transparent 65%),
+                var(--creme);
         }
 
-        /* ---------- En-tête ---------- */
-        .header {
-            text-align: center;
-            padding: 2.5rem 1rem 1.5rem;
+        .hero .container {
+            display: grid;
+            grid-template-columns: 1.1fr 1fr;
+            align-items: center;
+            gap: 3rem;
         }
 
         .brand {
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 1rem;
+            gap: 0.75rem;
+            color: var(--bleu);
+            margin-bottom: 1.25rem;
         }
 
         .brand img {
-            height: 50px;
+            height: 44px;
             width: auto;
         }
 
-        h1 {
-            font-size: 2.5rem;
-            font-weight: 300;
-            letter-spacing: -1px;
+        .hero h1 {
+            font-size: clamp(2.6rem, 6vw, 4.5rem);
+            font-weight: 700;
+            line-height: 1;
+            color: var(--encre);
         }
 
-        .subtitle {
-            color: var(--color-text-muted);
+        .hero h1 .accent {
+            color: var(--rouge);
+        }
+
+        .hero-text {
+            margin-top: 1.5rem;
+            max-width: 32rem;
             font-size: 1.1rem;
-            margin-top: 0.5rem;
+            line-height: 1.6;
+            color: var(--encre-douce);
         }
 
-        .mission {
-            color: var(--color-text-muted);
-            font-style: italic;
-            margin-top: 0.25rem;
+        .hero-mission {
+            margin-top: 0.5rem;
+            font-weight: 600;
+            color: var(--bleu);
+        }
+
+        .cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-top: 2rem;
+            padding: 0.9rem 2rem;
+            border-radius: var(--radius-pill);
+            background: var(--bleu);
+            color: var(--blanc);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .cta:hover {
+            background: var(--rouge);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .cta .arrow {
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        .cta:hover .arrow {
+            transform: translateY(3px);
+        }
+
+        /* Composition : trois blocs empilés bleu / blanc / rouge + tuiles d'outils */
+        .blocks {
+            position: relative;
+            width: 100%;
+            max-width: 440px;
+            aspect-ratio: 1 / 1;
+            margin: 0 auto;
+        }
+
+        .block {
+            position: absolute;
+            left: 8%;
+            width: 84%;
+            height: 30%;
+            border-radius: var(--radius-pill);
+        }
+
+        .block-1 { top: 4%;  background: var(--bleu); transform: translateX(-6%); }
+        .block-2 { top: 35%; background: var(--blanc); box-shadow: var(--shadow); transform: translateX(6%); }
+        .block-3 { top: 66%; background: var(--rouge); transform: translateX(-3%); }
+
+        .tile {
+            position: absolute;
+            display: grid;
+            place-items: center;
+            width: 5.5rem;
+            height: 5.5rem;
+            border-radius: 24px;
+            background: var(--blanc);
+            box-shadow: var(--shadow-hover);
+            font-size: 2.6rem;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .tile-1 { top: -2%;  right: 4%;  transform: rotate(8deg); }
+        .tile-2 { top: 38%;  left: -2%;  transform: rotate(-8deg); animation-delay: -1.5s; }
+        .tile-3 { bottom: 26%; right: -2%; transform: rotate(6deg); animation-delay: -3s; }
+        .tile-4 { bottom: -4%; left: 22%; transform: rotate(-5deg); animation-delay: -4.5s; }
+
+        @keyframes float {
+            0%, 100% { translate: 0 0; }
+            50%      { translate: 0 -12px; }
         }
 
         /* ---------- Navigation rapide (collante) ---------- */
@@ -121,83 +247,69 @@
             justify-content: center;
             gap: 0.5rem;
             padding: 0.75rem 1rem;
-            background: rgba(255, 255, 255, 0.6);
+            background: rgba(250, 247, 242, 0.8);
             backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--color-line);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(22, 26, 58, 0.08);
         }
 
         .quick-nav a {
             text-decoration: none;
-            color: var(--color-text);
-            background: var(--color-card);
-            border: 1px solid var(--color-line);
-            border-radius: 999px;
-            padding: 0.4rem 1rem;
+            font-weight: 600;
+            color: var(--encre);
+            background: var(--blanc);
+            border: 2px solid transparent;
+            border-radius: var(--radius-pill);
+            padding: 0.4rem 1.1rem;
             font-size: 0.9rem;
             transition: var(--transition);
         }
 
-        .quick-nav a:hover,
-        .quick-nav a.is-active {
-            border-color: var(--accent);
-            background: var(--accent-soft);
-            color: var(--accent);
-        }
-
         .quick-nav a:hover {
+            border-color: var(--accent);
+            color: var(--accent);
             transform: translateY(-2px);
-            box-shadow: var(--shadow);
         }
 
-        /* Chaque rubrique (et son raccourci) définit son accent */
-        .accent-classe    { --accent: var(--accent-classe);    --accent-soft: var(--accent-classe-soft); }
-        .accent-outils    { --accent: var(--accent-outils);    --accent-soft: var(--accent-outils-soft); }
-        .accent-suivi     { --accent: var(--accent-suivi);     --accent-soft: var(--accent-suivi-soft); }
-        .accent-direction { --accent: var(--accent-direction); --accent-soft: var(--accent-direction-soft); }
-
-        /* ---------- Contenu ---------- */
-        .main-content {
-            flex: 1;
-            width: 100%;
-            max-width: 1040px;
-            margin: 0 auto;
-            padding: 3rem 1rem;
+        .quick-nav a.is-active {
+            background: var(--accent);
+            color: var(--blanc);
         }
 
+        /* Chaque rubrique (et son raccourci) définit son accent et sa bande */
+        .accent-classe    { --accent: var(--bleu);  --accent-tint: var(--bleu-tint);  --band: var(--bleu-pale); }
+        .accent-outils    { --accent: var(--rouge); --accent-tint: var(--rouge-tint); --band: var(--creme); }
+        .accent-suivi     { --accent: var(--bleu);  --accent-tint: var(--bleu-tint);  --band: var(--rouge-pale); }
+        .accent-direction { --accent: var(--rouge); --accent-tint: var(--rouge-tint); --band: var(--creme); }
+
+        /* ---------- Rubriques : bandes pleine largeur ---------- */
         .section {
-            scroll-margin-top: 5rem;
-        }
-
-        .section + .section {
-            margin-top: 4rem;
+            background: var(--band);
+            padding: 4.5rem 0;
+            scroll-margin-top: 3.5rem;
         }
 
         .section-header {
             text-align: center;
-            margin-bottom: 2rem;
+            max-width: 40rem;
+            margin: 0 auto 2.5rem;
+        }
+
+        .section-header .eyebrow {
+            color: var(--accent);
         }
 
         .section-title {
-            font-size: 1.75rem;
-            font-weight: 400;
-        }
-
-        /* Petit trait d'accent centré sous le titre */
-        .section-title::after {
-            content: "";
-            display: block;
-            width: 48px;
-            height: 4px;
-            margin: 0.6rem auto 0;
-            border-radius: 999px;
-            background: var(--accent);
+            margin-top: 0.5rem;
+            font-size: clamp(2rem, 4.5vw, 3rem);
+            font-weight: 700;
+            line-height: 1.05;
         }
 
         .section-intro {
-            color: var(--color-text-muted);
-            font-size: 0.95rem;
-            margin-top: 0.6rem;
+            margin-top: 0.9rem;
+            color: var(--encre-douce);
+            font-size: 1.05rem;
         }
 
         /* Grille centrée : une dernière ligne incomplète reste au milieu */
@@ -205,51 +317,30 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 1.5rem;
+            gap: 1.25rem;
         }
 
         .tool-card {
-            --cols: 3;
-            flex: 0 1 calc((100% - (var(--cols) - 1) * 1.5rem) / var(--cols));
-            position: relative;
-            overflow: hidden;
+            --cols: 4;
+            flex: 0 1 calc((100% - (var(--cols) - 1) * 1.25rem) / var(--cols));
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
-            background: var(--color-card);
-            border: 1px solid var(--color-line);
-            border-radius: var(--radius-card);
-            padding: 2rem 1.5rem 1.5rem;
+            background: var(--blanc);
+            border: 3px solid transparent;
+            border-radius: var(--radius-bloc);
+            padding: 2rem 1.25rem 1.5rem;
             text-decoration: none;
-            color: var(--color-text);
-            transition: var(--transition);
+            color: var(--encre);
             box-shadow: var(--shadow);
-        }
-
-        /* Barre d'accent qui s'étire au survol */
-        .tool-card::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 50%;
-            width: 30%;
-            height: 4px;
-            border-radius: 0 0 4px 4px;
-            background: var(--accent);
-            transform: translateX(-50%);
-            transition: width 0.4s ease;
+            transition: var(--transition);
         }
 
         .tool-card:hover {
-            transform: translateY(-6px);
-            box-shadow: var(--shadow-hover);
-            background: var(--color-card-hover);
+            transform: translateY(-6px) rotate(-0.6deg);
             border-color: var(--accent);
-        }
-
-        .tool-card:hover::before {
-            width: 100%;
+            box-shadow: var(--shadow-hover);
         }
 
         .tool-card:active {
@@ -257,36 +348,38 @@
         }
 
         .tool-card:focus-visible,
-        .quick-nav a:focus-visible {
-            outline: 2px solid var(--accent);
+        .quick-nav a:focus-visible,
+        .cta:focus-visible {
+            outline: 3px solid var(--accent, var(--bleu));
             outline-offset: 3px;
         }
 
         .tool-icon {
             display: grid;
             place-items: center;
-            width: 4.5rem;
-            height: 4.5rem;
-            margin-bottom: 1rem;
+            width: 5rem;
+            height: 5rem;
+            margin-bottom: 1.1rem;
             border-radius: 50%;
-            background: var(--accent-soft);
-            font-size: 2.2rem;
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            background: var(--accent-tint);
+            font-size: 2.4rem;
+            transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         .tool-card:hover .tool-icon {
-            transform: scale(1.12) rotate(-6deg);
+            transform: scale(1.12) rotate(-8deg);
         }
 
         .tool-name {
-            font-size: 1.2rem;
-            font-weight: 500;
+            font-size: 1.25rem;
+            font-weight: 600;
+            line-height: 1.2;
             margin-bottom: 0.5rem;
         }
 
         .tool-description {
-            color: var(--color-text-muted);
-            font-size: 0.9rem;
+            color: var(--encre-douce);
+            font-size: 0.95rem;
             line-height: 1.5;
             flex: 1;
         }
@@ -301,71 +394,187 @@
         }
 
         .tags li {
-            background: var(--accent-soft);
+            background: var(--accent-tint);
             color: var(--accent);
-            border-radius: var(--radius-small);
-            padding: 0.15rem 0.6rem;
+            font-weight: 600;
+            border-radius: var(--radius-pill);
+            padding: 0.15rem 0.7rem;
             font-size: 0.75rem;
         }
 
-        /* « Ouvrir → » apparaît en bas de carte */
-        .tool-card::after {
-            content: "Ouvrir →";
+        /* Bouton « Ouvrir → » en pilule */
+        .tool-open {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
             margin-top: 1.25rem;
-            font-size: 0.85rem;
-            font-weight: 500;
+            padding: 0.4rem 1.1rem;
+            border-radius: var(--radius-pill);
+            background: var(--accent-tint);
             color: var(--accent);
-            opacity: 0.6;
+            font-weight: 800;
+            font-size: 0.85rem;
             transition: var(--transition);
         }
 
-        .tool-card:hover::after {
-            opacity: 1;
-            letter-spacing: 0.02em;
+        .tool-card:hover .tool-open {
+            background: var(--accent);
+            color: var(--blanc);
         }
 
-        .coming-soon {
+        .tool-open .arrow {
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        .tool-card:hover .tool-open .arrow {
+            transform: translateX(3px);
+        }
+
+        /* ---------- Bandeau final + pied de page ---------- */
+        .closing {
+            position: relative;
+            overflow: hidden;
+            background: var(--bleu);
+            color: var(--blanc);
+            padding: 5rem 0 2rem;
             text-align: center;
-            color: var(--color-text-muted);
-            font-style: italic;
-            margin-top: 4rem;
         }
 
-        /* ---------- Pied de page ---------- */
+        /* Grands ronds décoratifs, comme des pièces de construction */
+        .closing::before,
+        .closing::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .closing::before {
+            width: 26rem;
+            height: 26rem;
+            right: -9rem;
+            top: -10rem;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .closing::after {
+            width: 16rem;
+            height: 16rem;
+            left: -6rem;
+            bottom: -8rem;
+            background: var(--rouge);
+            opacity: 0.9;
+        }
+
+        .closing .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .closing .eyebrow {
+            color: var(--rouge-tint);
+        }
+
+        .closing h2 {
+            margin-top: 0.5rem;
+            font-size: clamp(2rem, 5vw, 3.25rem);
+            font-weight: 700;
+            line-height: 1.05;
+        }
+
         .footer {
-            text-align: center;
-            padding: 1.5rem;
-            border-top: 1px solid var(--color-line);
-            color: var(--color-text-muted);
+            margin-top: 3.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
             font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.85);
         }
 
         /* ---------- Animations d'apparition ---------- */
+        /* Les apparitions utilisent « translate », indépendant de « transform » :
+           les effets de survol restent actifs une fois l'animation terminée */
         @keyframes fade-up {
-            from { opacity: 0; transform: translateY(16px); }
-            to   { opacity: 1; transform: none; }
+            from { opacity: 0; translate: 0 16px; }
+            to   { opacity: 1; translate: 0 0; }
         }
 
-        .header > * {
+        .hero-copy > * {
             animation: fade-up 0.6s ease both;
         }
-        .header > :nth-child(2) { animation-delay: 0.1s; }
-        .header > :nth-child(3) { animation-delay: 0.2s; }
+        .hero-copy > :nth-child(2) { animation-delay: 0.08s; }
+        .hero-copy > :nth-child(3) { animation-delay: 0.16s; }
+        .hero-copy > :nth-child(4) { animation-delay: 0.24s; }
+        .hero-copy > :nth-child(5) { animation-delay: 0.32s; }
+
+        @keyframes block-in {
+            from { opacity: 0; translate: 0 30px; }
+            to   { opacity: 1; translate: 0 0; }
+        }
+
+        .block {
+            animation: block-in 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+        }
+        .block-2 { animation-delay: 0.12s; }
+        .block-3 { animation-delay: 0.24s; }
 
         /* Masqué seulement si le JavaScript est actif, pour ne jamais cacher le contenu */
         .js .reveal {
             opacity: 0;
-            transform: translateY(24px);
+            translate: 0 24px;
         }
 
         .js .reveal.is-visible {
-            animation: fade-up 0.6s ease both;
+            opacity: 1;
+            translate: 0 0;
+            animation: fade-up 0.6s ease backwards;
             animation-delay: calc(var(--i, 0) * 80ms);
         }
 
+        /* ---------- Adaptation aux écrans ---------- */
+        @media (max-width: 960px) {
+            .tool-card {
+                --cols: 3;
+            }
+        }
+
         @media (max-width: 768px) {
-            h1 {
+            .hero {
+                padding: 2.5rem 0 3rem;
+            }
+
+            .hero .container {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 2.5rem;
+            }
+
+            .brand {
+                justify-content: center;
+            }
+
+            .hero-text {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .blocks {
+                max-width: 240px;
+            }
+
+            .tile {
+                width: 4.25rem;
+                height: 4.25rem;
                 font-size: 2rem;
+                border-radius: 18px;
+            }
+
+            .section {
+                padding: 3.5rem 0;
+            }
+
+            .tool-card {
+                --cols: 2;
             }
 
             /* Navigation sur une seule ligne, qu'on fait défiler du doigt :
@@ -393,30 +602,32 @@
             .quick-nav a:last-child {
                 margin-right: auto;
             }
-
-            .tool-card {
-                --cols: 2;
-            }
         }
 
-        @media (max-width: 480px) {
+        @media (max-width: 520px) {
             .tool-card {
                 --cols: 1;
             }
         }
 
-        /* À l'impression, toutes les cartes sont visibles, sans navigation collante */
+        /* À l'impression, tout est visible, sans navigation collante ni décor */
         @media print {
             .js .reveal,
             .js .reveal.is-visible {
                 opacity: 1;
-                transform: none;
+                translate: 0 0;
                 animation: none;
                 transition: none;
             }
 
             .quick-nav {
                 position: static;
+            }
+
+            .blocks,
+            .closing::before,
+            .closing::after {
+                display: none;
             }
         }
 
@@ -434,12 +645,13 @@
 
             .js .reveal {
                 opacity: 1;
-                transform: none;
+                translate: 0 0;
             }
 
             .tool-card:hover,
             .tool-card:hover .tool-icon,
-            .quick-nav a:hover {
+            .quick-nav a:hover,
+            .cta:hover {
                 transform: none;
             }
         }
@@ -447,134 +659,175 @@
 </head>
 <body>
 
-    <header class="header">
-        <div class="brand">
-            <img src="images/Logo_DSDEN76.png" alt="Logo DSDEN76" onerror="this.style.display='none'">
-            <h1>Apps1D76</h1>
+    <header class="hero">
+        <div class="container">
+            <div class="hero-copy">
+                <div class="brand">
+                    <img src="images/Logo_DSDEN76.png" alt="Logo DSDEN76" onerror="this.style.display='none'">
+                    <span class="eyebrow">Apps1D76</span>
+                </div>
+                <h1>Des outils numériques pour <span class="accent">l'école primaire</span></h1>
+                <p class="hero-text">Des ressources pour la classe, des utilitaires du quotidien, le suivi des élèves et l'organisation de l'école, réunis au même endroit.</p>
+                <p class="hero-mission">Mission Numérique Éducatif 76</p>
+                <a href="#en-classe" class="cta eyebrow">Choisir un outil <span class="arrow" aria-hidden="true">↓</span></a>
+            </div>
+
+            <div class="blocks" aria-hidden="true">
+                <span class="block block-1"></span>
+                <span class="block block-2"></span>
+                <span class="block block-3"></span>
+                <span class="tile tile-1">📚</span>
+                <span class="tile tile-2">🎲</span>
+                <span class="tile tile-3">🏷️</span>
+                <span class="tile tile-4">📖</span>
+            </div>
         </div>
-        <p class="subtitle">Outils numériques pour l'école primaire</p>
-        <p class="mission">Mission Numérique Éducatif 76</p>
     </header>
 
     <nav class="quick-nav" aria-label="Rubriques">
-        <a href="#en-classe" class="accent-classe">🧑‍🏫 En classe</a>
-        <a href="#outils-classe" class="accent-outils">🧰 Outils pour la classe</a>
-        <a href="#suivi" class="accent-suivi">📊 Suivre et évaluer</a>
-        <a href="#direction" class="accent-direction">🏫 Direction d'école</a>
+        <a href="#en-classe" class="accent-classe">En classe</a>
+        <a href="#outils-classe" class="accent-outils">Outils pour la classe</a>
+        <a href="#suivi" class="accent-suivi">Suivre et évaluer</a>
+        <a href="#direction" class="accent-direction">Direction d'école</a>
     </nav>
 
-    <main class="main-content">
+    <main>
 
         <section class="section accent-classe" id="en-classe">
-            <div class="section-header">
-                <h2 class="section-title">🧑‍🏫 En classe</h2>
-                <p class="section-intro">Des ressources pour faire apprendre les élèves</p>
-            </div>
-            <div class="tool-grid">
-                <a href="./prompteurs/index.html" class="tool-card">
-                    <span class="tool-icon">▶️</span>
-                    <div class="tool-name">Prompteurs de lecture</div>
-                    <p class="tool-description">Outils d'aide à la lecture avec défilement automatique pour améliorer la fluence.</p>
-                    <ul class="tags"><li>Français</li><li>Fluence</li></ul>
-                </a>
+            <div class="container">
+                <div class="section-header">
+                    <p class="eyebrow">En classe</p>
+                    <h2 class="section-title">Faire apprendre les élèves</h2>
+                    <p class="section-intro">Des ressources à utiliser en classe, en français, en mathématiques et en langues vivantes.</p>
+                </div>
+                <div class="tool-grid">
+                    <a href="./prompteurs/index.html" class="tool-card">
+                        <span class="tool-icon" aria-hidden="true">▶️</span>
+                        <h3 class="tool-name">Prompteurs de lecture</h3>
+                        <p class="tool-description">Outils d'aide à la lecture avec défilement automatique pour améliorer la fluence.</p>
+                        <ul class="tags"><li>Français</li><li>Fluence</li></ul>
+                        <span class="tool-open">Ouvrir <span class="arrow" aria-hidden="true">→</span></span>
+                    </a>
 
-                <a href="./Litteranum/index.html" class="tool-card">
-                    <span class="tool-icon">📚</span>
-                    <div class="tool-name">Littérature et numérique</div>
-                    <p class="tool-description">Des albums et documentaires pour travailler le numérique en classe.</p>
-                    <ul class="tags"><li>Français</li><li>Numérique</li></ul>
-                </a>
+                    <a href="./Litteranum/index.html" class="tool-card">
+                        <span class="tool-icon" aria-hidden="true">📚</span>
+                        <h3 class="tool-name">Littérature et numérique</h3>
+                        <p class="tool-description">Des albums et documentaires pour travailler le numérique en classe.</p>
+                        <ul class="tags"><li>Français</li><li>Numérique</li></ul>
+                        <span class="tool-open">Ouvrir <span class="arrow" aria-hidden="true">→</span></span>
+                    </a>
 
-                <a href="./course/index.html" class="tool-card">
-                    <span class="tool-icon">🔢</span>
-                    <div class="tool-name">Course aux nombres</div>
-                    <p class="tool-description">Générateur de fiches d'entraînement au calcul de fluence.</p>
-                    <ul class="tags"><li>Mathématiques</li><li>CE1</li></ul>
-                </a>
+                    <a href="./course/index.html" class="tool-card">
+                        <span class="tool-icon" aria-hidden="true">🔢</span>
+                        <h3 class="tool-name">Course aux nombres</h3>
+                        <p class="tool-description">Générateur de fiches d'entraînement au calcul de fluence.</p>
+                        <ul class="tags"><li>Mathématiques</li><li>CE1</li></ul>
+                        <span class="tool-open">Ouvrir <span class="arrow" aria-hidden="true">→</span></span>
+                    </a>
 
-                <a href="./250consignes/index.html" class="tool-card">
-                    <span class="tool-icon">🙋</span>
-                    <div class="tool-name">250 consignes en LVE</div>
-                    <p class="tool-description">250 consignes utilisables en classe en allemand, anglais, espagnol et portugais.</p>
-                    <ul class="tags"><li>Langues vivantes</li></ul>
-                </a>
+                    <a href="./250consignes/index.html" class="tool-card">
+                        <span class="tool-icon" aria-hidden="true">🙋</span>
+                        <h3 class="tool-name">250 consignes en LVE</h3>
+                        <p class="tool-description">250 consignes utilisables en classe en allemand, anglais, espagnol et portugais.</p>
+                        <ul class="tags"><li>Langues vivantes</li></ul>
+                        <span class="tool-open">Ouvrir <span class="arrow" aria-hidden="true">→</span></span>
+                    </a>
+                </div>
             </div>
         </section>
 
         <section class="section accent-outils" id="outils-classe">
-            <div class="section-header">
-                <h2 class="section-title">🧰 Outils pour la classe</h2>
-                <p class="section-intro">Des utilitaires pour animer et gérer la classe au quotidien</p>
-            </div>
-            <div class="tool-grid">
-                <a href="./generateur-etiquettes-deplacables/" class="tool-card">
-                    <span class="tool-icon">🏷️</span>
-                    <div class="tool-name">Générateur d'étiquettes</div>
-                    <p class="tool-description">Étiquettes déplaçables (textes, images…) pour l'écran numérique interactif.</p>
-                    <ul class="tags"><li>Tous domaines</li><li>ENI</li></ul>
-                </a>
+            <div class="container">
+                <div class="section-header">
+                    <p class="eyebrow">Outils pour la classe</p>
+                    <h2 class="section-title">Animer la classe au quotidien</h2>
+                    <p class="section-intro">Des utilitaires prêts à l'emploi, pensés pour l'écran numérique interactif.</p>
+                </div>
+                <div class="tool-grid">
+                    <a href="./generateur-etiquettes-deplacables/" class="tool-card">
+                        <span class="tool-icon" aria-hidden="true">🏷️</span>
+                        <h3 class="tool-name">Générateur d'étiquettes</h3>
+                        <p class="tool-description">Étiquettes déplaçables (textes, images…) pour l'écran numérique interactif.</p>
+                        <ul class="tags"><li>Tous domaines</li><li>ENI</li></ul>
+                        <span class="tool-open">Ouvrir <span class="arrow" aria-hidden="true">→</span></span>
+                    </a>
 
-                <a href="./randomizer/index.html" class="tool-card">
-                    <span class="tool-icon">🎲</span>
-                    <div class="tool-name">Randomizer</div>
-                    <p class="tool-description">Tirage au sort d'un nom dans une liste importable, avec durée réglable et confettis.</p>
-                    <ul class="tags"><li>Tirage au sort</li><li>ENI</li></ul>
-                </a>
+                    <a href="./randomizer/index.html" class="tool-card">
+                        <span class="tool-icon" aria-hidden="true">🎲</span>
+                        <h3 class="tool-name">Randomizer</h3>
+                        <p class="tool-description">Tirage au sort d'un nom dans une liste importable, avec durée réglable et confettis.</p>
+                        <ul class="tags"><li>Tirage au sort</li><li>ENI</li></ul>
+                        <span class="tool-open">Ouvrir <span class="arrow" aria-hidden="true">→</span></span>
+                    </a>
+                </div>
             </div>
         </section>
 
         <section class="section accent-suivi" id="suivi">
-            <div class="section-header">
-                <h2 class="section-title">📊 Suivre et évaluer</h2>
-                <p class="section-intro">Suivre les progrès des élèves et y répondre</p>
-            </div>
-            <div class="tool-grid">
-                <a href="./carnet.html" class="tool-card">
-                    <span class="tool-icon">📖</span>
-                    <div class="tool-name">Carnet de suivi des apprentissages</div>
-                    <p class="tool-description">Carnet de suivi des apprentissages de ses élèves, par domaine de compétence.</p>
-                    <ul class="tags"><li>Maternelle</li></ul>
-                </a>
+            <div class="container">
+                <div class="section-header">
+                    <p class="eyebrow">Suivre et évaluer</p>
+                    <h2 class="section-title">Suivre les progrès des élèves</h2>
+                    <p class="section-intro">Garder une trace des apprentissages et trouver des ressources pour y répondre.</p>
+                </div>
+                <div class="tool-grid">
+                    <a href="./carnet.html" class="tool-card">
+                        <span class="tool-icon" aria-hidden="true">📖</span>
+                        <h3 class="tool-name">Carnet de suivi des apprentissages</h3>
+                        <p class="tool-description">Carnet de suivi des apprentissages de ses élèves, par domaine de compétence.</p>
+                        <ul class="tags"><li>Maternelle</li></ul>
+                        <span class="tool-open">Ouvrir <span class="arrow" aria-hidden="true">→</span></span>
+                    </a>
 
-                <a href="./evalaide/index.html" class="tool-card">
-                    <span class="tool-icon">🔍</span>
-                    <div class="tool-name">Éval'aide numérique</div>
-                    <p class="tool-description">Ressources numériques associées aux compétences des évaluations nationales.</p>
-                    <ul class="tags"><li>Français</li><li>Mathématiques</li><li>CP → CM2</li></ul>
-                </a>
+                    <a href="./evalaide/index.html" class="tool-card">
+                        <span class="tool-icon" aria-hidden="true">🔍</span>
+                        <h3 class="tool-name">Éval'aide numérique</h3>
+                        <p class="tool-description">Ressources numériques associées aux compétences des évaluations nationales.</p>
+                        <ul class="tags"><li>Français</li><li>Mathématiques</li><li>CP → CM2</li></ul>
+                        <span class="tool-open">Ouvrir <span class="arrow" aria-hidden="true">→</span></span>
+                    </a>
+                </div>
             </div>
         </section>
 
         <section class="section accent-direction" id="direction">
-            <div class="section-header">
-                <h2 class="section-title">🏫 Direction d'école</h2>
-                <p class="section-intro">Organiser la vie de l'école</p>
-            </div>
-            <div class="tool-grid">
-                <a href="./outildir/orga_recre.html" class="tool-card">
-                    <span class="tool-icon">⏰</span>
-                    <div class="tool-name">Planning des récréations</div>
-                    <p class="tool-description">Qui surveille quand ? Un organiseur de planning simple, avec étiquettes déplaçables.</p>
-                </a>
+            <div class="container">
+                <div class="section-header">
+                    <p class="eyebrow">Direction d'école</p>
+                    <h2 class="section-title">Organiser la vie de l'école</h2>
+                    <p class="section-intro">Des outils simples pour les plannings et la préparation de la rentrée.</p>
+                </div>
+                <div class="tool-grid">
+                    <a href="./outildir/orga_recre.html" class="tool-card">
+                        <span class="tool-icon" aria-hidden="true">⏰</span>
+                        <h3 class="tool-name">Planning des récréations</h3>
+                        <p class="tool-description">Qui surveille quand ? Un organiseur de planning simple, avec étiquettes déplaçables.</p>
+                        <span class="tool-open">Ouvrir <span class="arrow" aria-hidden="true">→</span></span>
+                    </a>
 
-                <a href="./outildir/ThunderStruct.html" class="tool-card">
-                    <span class="tool-icon">📆</span>
-                    <div class="tool-name">Planifier ses classes n+1</div>
-                    <p class="tool-description">Répartition des élèves dans les classes pour préparer la rentrée scolaire.</p>
-                </a>
+                    <a href="./outildir/ThunderStruct.html" class="tool-card">
+                        <span class="tool-icon" aria-hidden="true">📆</span>
+                        <h3 class="tool-name">Planifier ses classes n+1</h3>
+                        <p class="tool-description">Répartition des élèves dans les classes pour préparer la rentrée scolaire.</p>
+                        <span class="tool-open">Ouvrir <span class="arrow" aria-hidden="true">→</span></span>
+                    </a>
+                </div>
             </div>
         </section>
 
-        <p class="coming-soon reveal">D'autres outils arriveront bientôt !</p>
     </main>
 
-    <footer class="footer">
-        Académie de Normandie - Seine-Maritime (76) • Conçu pour faciliter l'apprentissage
+    <footer class="closing">
+        <div class="container">
+            <p class="eyebrow reveal">Et ensuite ?</p>
+            <h2 class="reveal">D'autres outils arriveront bientôt !</h2>
+            <p class="footer">Mission Numérique Éducatif 76 • Académie de Normandie - Seine-Maritime (76) • Conçu pour faciliter l'apprentissage</p>
+        </div>
     </footer>
 
     <script>
         // Apparition progressive des cartes et rubriques au défilement
-        const revealables = document.querySelectorAll('.section-header, .tool-card, .coming-soon');
+        const revealables = document.querySelectorAll('.section-header, .tool-card, .closing .reveal');
         document.querySelectorAll('.tool-grid').forEach(grid => {
             [...grid.children].forEach((card, i) => card.style.setProperty('--i', i));
         });

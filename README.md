@@ -8,6 +8,8 @@ Page d'accueil des outils de la Mission Numérique Éducatif 76, réorganisée e
 index.html     Page d'accueil (rubriques : En classe, Outils pour la classe,
                Suivre et évaluer, Direction d'école)
 randomizer/    Randomizer — tirage au sort d'un nom dans une liste
+fonts/         Polices Bricolage Grotesque et Nunito (licence SIL OFL),
+               hébergées dans le site : aucun appel à un service externe
 ```
 
 Les autres outils référencés par la page d'accueil (`prompteurs/`, `carnet.html`,
