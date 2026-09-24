@@ -35,10 +35,9 @@
     if (window.addEventListener) {
         window.addEventListener('resize', scheduleFit, false);
         window.addEventListener('orientationchange', scheduleFit, false);
+        window.addEventListener('load', fitApp, false);
     }
-    setTimeout(fitApp, 0);
-    setTimeout(fitApp, 250);
-    setTimeout(fitApp, 800);
+    fitApp();
 
     function bindAction(element, action) {
         var el = typeof element === 'string' ? document.querySelector(element) : element;
@@ -187,7 +186,6 @@
 
     if (nameList.addEventListener) {
         nameList.addEventListener('input', updateCount, false);
-        nameList.addEventListener('keyup', updateCount, false);
     }
 
     if (durationRange.addEventListener) {

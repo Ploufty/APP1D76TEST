@@ -2,75 +2,53 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Apps1D76 - Outils numériques</title>
     <meta name="description" content="Outils numériques pour l'école primaire - Mission Numérique Éducatif 76">
-    <link rel="preload" href="fonts/bricolage-grotesque-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="fonts/nunito-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+    <meta name="theme-color" content="#000091">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect y='2' width='32' height='9' rx='4.5' fill='%23000091'/%3E%3Crect y='12' width='32' height='8' rx='4' fill='%23e8ecff'/%3E%3Crect y='21' width='32' height='9' rx='4.5' fill='%23e1000f'/%3E%3C/svg%3E">
+    <link rel="preload" href="fonts/Marianne-Bold.woff2" as="font" type="font/woff2" crossorigin>
     <script>document.documentElement.classList.add('js');</script>
     <style>
-        /* ==========================================================
-           Polices (hébergées dans le site, licence SIL OFL : voir fonts/)
-           ========================================================== */
+        /* Police Marianne (marque de l'État) : voir fonts/README.md */
         @font-face {
-            font-family: 'Bricolage Grotesque';
-            src: url('fonts/bricolage-grotesque-latin-wght-normal.woff2') format('woff2');
-            font-weight: 200 800;
-            font-display: swap;
-        }
-
-        @font-face {
-            font-family: 'Nunito';
-            src: url('fonts/nunito-latin-400-normal.woff2') format('woff2');
+            font-family: 'Marianne';
+            src: url('fonts/Marianne-Regular.woff2') format('woff2');
             font-weight: 400;
             font-display: swap;
         }
 
         @font-face {
-            font-family: 'Nunito';
-            src: url('fonts/nunito-latin-600-normal.woff2') format('woff2');
-            font-weight: 600;
-            font-display: swap;
-        }
-
-        @font-face {
-            font-family: 'Nunito';
-            src: url('fonts/nunito-latin-800-normal.woff2') format('woff2');
-            font-weight: 800;
+            font-family: 'Marianne';
+            src: url('fonts/Marianne-Bold.woff2') format('woff2');
+            font-weight: 700;
             font-display: swap;
         }
 
         /* ==========================================================
-           Direction artistique Apps1D76 : « blocs de construction »
-           en bleu, blanc, rouge
+           Direction artistique : blocs de construction bleu, blanc, rouge
            ========================================================== */
         :root {
-            /* Couleurs */
-            --bleu: #000091;                /* bleu profond : titres forts, bandeau final */
-            --bleu-pale: #e8ecff;           /* bande de rubrique */
-            --bleu-tint: #d5dcff;           /* ronds d'icônes, étiquettes */
-            --rouge: #e1000f;               /* rouge vif : accents */
-            --rouge-pale: #fdeceb;          /* bande de rubrique */
+            --bleu: #000091;
+            --bleu-pale: #e8ecff;
+            --bleu-tint: #d5dcff;
+            --rouge: #e1000f;
+            --rouge-fonce: #b3000c;         /* texte rouge sur fond rose (contraste AA) */
+            --rouge-pale: #fdeceb;
             --rouge-tint: #fbd5d3;
-            --creme: #faf7f2;               /* blanc chaud du fond */
-            --blanc: #ffffff;
-            --encre: #161a3a;               /* texte principal */
-            --encre-douce: #4b5170;         /* texte secondaire */
+            --creme: #faf7f2;
+            --blanc: #fff;
+            --encre: #161a3a;
+            --encre-douce: #4b5170;
 
-            /* Typographie */
-            --font-titre: 'Bricolage Grotesque', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            --font-texte: 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --font: 'Marianne', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
-            /* Formes et ombres */
-            --radius-bloc: 28px;
-            --radius-pill: 999px;
-            --shadow: 0 2px 0 rgba(22, 26, 58, 0.06), 0 10px 30px rgba(22, 26, 58, 0.06);
-            --shadow-hover: 0 4px 0 rgba(22, 26, 58, 0.06), 0 18px 40px rgba(22, 26, 58, 0.12);
-            --transition: all 0.3s ease;
-        }
-
-        html {
-            scroll-behavior: smooth;
+            --radius: 28px;
+            --pill: 999px;
+            --shadow: 0 2px 0 rgba(22, 26, 58, .06), 0 10px 30px rgba(22, 26, 58, .06);
+            --shadow-hover: 0 4px 0 rgba(22, 26, 58, .06), 0 18px 40px rgba(22, 26, 58, .12);
+            --ease: .3s ease;
+            --bounce: cubic-bezier(.34, 1.56, .64, 1);
         }
 
         * {
@@ -79,45 +57,47 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: var(--font-texte);
+            font-family: var(--font);
+            line-height: 1.5;
             color: var(--encre);
             background: var(--creme);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow-x: hidden;
         }
 
         h1, h2, h3 {
-            font-family: var(--font-titre);
-            letter-spacing: -0.02em;
+            line-height: 1.1;
+            letter-spacing: -.01em;
         }
 
-        /* Petite étiquette en capitales au-dessus des titres */
         .eyebrow {
-            font-family: var(--font-texte);
-            font-weight: 800;
-            font-size: 0.85rem;
-            letter-spacing: 0.08em;
+            font-weight: 700;
+            font-size: .85rem;
+            letter-spacing: .08em;
             text-transform: uppercase;
         }
 
         .container {
-            width: 100%;
             max-width: 1100px;
             margin: 0 auto;
             padding: 0 1.5rem;
         }
 
-        /* ---------- En-tête : texte + composition de blocs ---------- */
+        :focus-visible {
+            outline: 3px solid var(--accent, var(--bleu));
+            outline-offset: 3px;
+        }
+
+        /* ---------- En-tête ---------- */
         .hero {
-            position: relative;
             padding: 3.5rem 0 4rem;
+            overflow-x: clip;
             background:
-                radial-gradient(40rem 28rem at 0% 0%, rgba(0, 0, 145, 0.07), transparent 65%),
-                radial-gradient(36rem 26rem at 100% 100%, rgba(225, 0, 15, 0.06), transparent 65%),
-                var(--creme);
+                radial-gradient(40rem 28rem at 0 0, rgba(0, 0, 145, .07), transparent 65%),
+                radial-gradient(36rem 26rem at 100% 100%, rgba(225, 0, 15, .06), transparent 65%);
         }
 
         .hero .container {
@@ -130,52 +110,46 @@
         .brand {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
-            color: var(--bleu);
+            gap: .75rem;
             margin-bottom: 1.25rem;
+            color: var(--bleu);
         }
 
         .brand img {
             height: 44px;
-            width: auto;
         }
 
         .hero h1 {
-            font-size: clamp(2.6rem, 6vw, 4.5rem);
-            font-weight: 700;
-            line-height: 1;
-            color: var(--encre);
+            font-size: clamp(2.5rem, 6vw, 4.25rem);
         }
 
-        .hero h1 .accent {
+        .hero h1 span {
             color: var(--rouge);
         }
 
         .hero-text {
-            margin-top: 1.5rem;
             max-width: 32rem;
+            margin-top: 1.5rem;
             font-size: 1.1rem;
             line-height: 1.6;
             color: var(--encre-douce);
         }
 
         .hero-mission {
-            margin-top: 0.5rem;
-            font-weight: 600;
+            margin-top: .5rem;
+            font-weight: 700;
             color: var(--bleu);
         }
 
         .cta {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.6rem;
+            display: inline-block;
             margin-top: 2rem;
-            padding: 0.9rem 2rem;
-            border-radius: var(--radius-pill);
+            padding: .9rem 2rem;
+            border-radius: var(--pill);
             background: var(--bleu);
             color: var(--blanc);
             text-decoration: none;
-            transition: var(--transition);
+            transition: background-color var(--ease), transform var(--ease), box-shadow var(--ease);
         }
 
         .cta:hover {
@@ -184,38 +158,43 @@
             box-shadow: var(--shadow-hover);
         }
 
-        .cta .arrow {
+        .cta span {
             display: inline-block;
-            transition: transform 0.3s ease;
+            margin-left: .4rem;
+            transition: translate var(--ease);
         }
 
-        .cta:hover .arrow {
-            transform: translateY(3px);
+        .cta:hover span {
+            translate: 0 3px;
         }
 
-        /* Composition : trois blocs empilés bleu / blanc / rouge + tuiles d'outils */
+        /* Trois blocs empilés + tuiles d'outils flottantes */
         .blocks {
             position: relative;
             width: 100%;
             max-width: 440px;
-            aspect-ratio: 1 / 1;
+            aspect-ratio: 1;
             margin: 0 auto;
         }
 
-        .block {
+        .block,
+        .tile {
             position: absolute;
+        }
+
+        .block {
             left: 8%;
             width: 84%;
             height: 30%;
-            border-radius: var(--radius-pill);
+            border-radius: var(--pill);
+            animation: block-in .7s var(--bounce) backwards;
         }
 
-        .block-1 { top: 4%;  background: var(--bleu); transform: translateX(-6%); }
-        .block-2 { top: 35%; background: var(--blanc); box-shadow: var(--shadow); transform: translateX(6%); }
-        .block-3 { top: 66%; background: var(--rouge); transform: translateX(-3%); }
+        .block:nth-child(1) { top: 4%;  background: var(--bleu); transform: translateX(-6%); }
+        .block:nth-child(2) { top: 35%; background: var(--blanc); box-shadow: var(--shadow); transform: translateX(6%); animation-delay: .12s; }
+        .block:nth-child(3) { top: 66%; background: var(--rouge); transform: translateX(-3%); animation-delay: .24s; }
 
         .tile {
-            position: absolute;
             display: grid;
             place-items: center;
             width: 5.5rem;
@@ -227,42 +206,37 @@
             animation: float 6s ease-in-out infinite;
         }
 
-        .tile-1 { top: -2%;  right: 4%;  transform: rotate(8deg); }
-        .tile-2 { top: 38%;  left: -2%;  transform: rotate(-8deg); animation-delay: -1.5s; }
-        .tile-3 { bottom: 26%; right: -2%; transform: rotate(6deg); animation-delay: -3s; }
-        .tile-4 { bottom: -4%; left: 22%; transform: rotate(-5deg); animation-delay: -4.5s; }
+        .tile:nth-child(4) { top: -2%;    right: 4%;  rotate: 8deg; }
+        .tile:nth-child(5) { top: 38%;    left: -2%;  rotate: -8deg; animation-delay: -1.5s; }
+        .tile:nth-child(6) { bottom: 26%; right: -2%; rotate: 6deg;  animation-delay: -3s; }
+        .tile:nth-child(7) { bottom: -4%; left: 22%;  rotate: -5deg; animation-delay: -4.5s; }
 
-        @keyframes float {
-            0%, 100% { translate: 0 0; }
-            50%      { translate: 0 -12px; }
-        }
-
-        /* ---------- Navigation rapide (collante) ---------- */
+        /* ---------- Navigation collante ---------- */
         .quick-nav {
             position: sticky;
             top: 0;
             z-index: 10;
             display: flex;
-            flex-wrap: wrap;
             justify-content: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1rem;
-            background: rgba(250, 247, 242, 0.8);
-            backdrop-filter: blur(12px);
+            gap: .5rem;
+            padding: .75rem 1rem;
+            background: rgba(250, 247, 242, .8);
             -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(22, 26, 58, 0.08);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(22, 26, 58, .08);
         }
 
         .quick-nav a {
-            text-decoration: none;
-            font-weight: 600;
-            color: var(--encre);
-            background: var(--blanc);
+            flex-shrink: 0;
+            padding: .4rem 1.1rem;
             border: 2px solid transparent;
-            border-radius: var(--radius-pill);
-            padding: 0.4rem 1.1rem;
-            font-size: 0.9rem;
-            transition: var(--transition);
+            border-radius: var(--pill);
+            background: var(--blanc);
+            color: var(--encre);
+            font-weight: 700;
+            font-size: .9rem;
+            text-decoration: none;
+            transition: color var(--ease), background-color var(--ease), border-color var(--ease), transform var(--ease);
         }
 
         .quick-nav a:hover {
@@ -276,44 +250,47 @@
             color: var(--blanc);
         }
 
-        /* Chaque rubrique (et son raccourci) définit son accent et sa bande */
-        .accent-classe    { --accent: var(--bleu);  --accent-tint: var(--bleu-tint);  --band: var(--bleu-pale); }
-        .accent-outils    { --accent: var(--rouge); --accent-tint: var(--rouge-tint); --band: var(--creme); }
-        .accent-suivi     { --accent: var(--bleu);  --accent-tint: var(--bleu-tint);  --band: var(--rouge-pale); }
-        .accent-direction { --accent: var(--rouge); --accent-tint: var(--rouge-tint); --band: var(--creme); }
+        /* Accent et bande de chaque rubrique (et de son raccourci) */
+        .classe,
+        .suivi     { --accent: var(--bleu);  --accent-text: var(--bleu);        --tint: var(--bleu-tint); }
+        .outils,
+        .direction { --accent: var(--rouge); --accent-text: var(--rouge-fonce); --tint: var(--rouge-tint); }
+        .classe    { --band: var(--bleu-pale); }
+        .suivi     { --band: var(--rouge-pale); }
+        .outils,
+        .direction { --band: var(--creme); }
 
-        /* ---------- Rubriques : bandes pleine largeur ---------- */
+        /* ---------- Rubriques ---------- */
         .section {
-            background: var(--band);
             padding: 4.5rem 0;
+            background: var(--band);
             scroll-margin-top: 3.5rem;
         }
 
         .section-header {
-            text-align: center;
             max-width: 40rem;
             margin: 0 auto 2.5rem;
+            text-align: center;
         }
 
         .section-header .eyebrow {
             color: var(--accent);
         }
 
-        .section-title {
-            margin-top: 0.5rem;
+        .section-header h2 {
+            margin-top: .5rem;
             font-size: clamp(2rem, 4.5vw, 3rem);
-            font-weight: 700;
-            line-height: 1.05;
         }
 
-        .section-intro {
-            margin-top: 0.9rem;
-            color: var(--encre-douce);
+        .section-header p:last-child {
+            margin-top: .9rem;
             font-size: 1.05rem;
+            color: var(--encre-douce);
         }
 
-        /* Grille centrée : une dernière ligne incomplète reste au milieu */
+        /* Grille centrée : une ligne incomplète reste au milieu */
         .tool-grid {
+            --cols: 4;
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
@@ -321,37 +298,29 @@
         }
 
         .tool-card {
-            --cols: 4;
             flex: 0 1 calc((100% - (var(--cols) - 1) * 1.25rem) / var(--cols));
             display: flex;
             flex-direction: column;
             align-items: center;
-            text-align: center;
-            background: var(--blanc);
-            border: 3px solid transparent;
-            border-radius: var(--radius-bloc);
             padding: 2rem 1.25rem 1.5rem;
-            text-decoration: none;
-            color: var(--encre);
+            border: 3px solid transparent;
+            border-radius: var(--radius);
+            background: var(--blanc);
             box-shadow: var(--shadow);
-            transition: var(--transition);
+            color: var(--encre);
+            text-align: center;
+            text-decoration: none;
+            transition: transform var(--ease), border-color var(--ease), box-shadow var(--ease);
         }
 
         .tool-card:hover {
-            transform: translateY(-6px) rotate(-0.6deg);
+            transform: translateY(-6px) rotate(-.6deg);
             border-color: var(--accent);
             box-shadow: var(--shadow-hover);
         }
 
         .tool-card:active {
-            transform: translateY(-2px) scale(0.98);
-        }
-
-        .tool-card:focus-visible,
-        .quick-nav a:focus-visible,
-        .cta:focus-visible {
-            outline: 3px solid var(--accent, var(--bleu));
-            outline-offset: 3px;
+            transform: translateY(-2px) scale(.98);
         }
 
         .tool-icon {
@@ -361,110 +330,96 @@
             height: 5rem;
             margin-bottom: 1.1rem;
             border-radius: 50%;
-            background: var(--accent-tint);
+            background: var(--tint);
             font-size: 2.4rem;
-            transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: transform .45s var(--bounce);
         }
 
         .tool-card:hover .tool-icon {
             transform: scale(1.12) rotate(-8deg);
         }
 
-        .tool-name {
-            font-size: 1.25rem;
-            font-weight: 600;
-            line-height: 1.2;
-            margin-bottom: 0.5rem;
+        .tool-card h3 {
+            margin-bottom: .5rem;
+            font-size: 1.2rem;
         }
 
-        .tool-description {
-            color: var(--encre-douce);
-            font-size: 0.95rem;
-            line-height: 1.5;
+        .tool-card p {
             flex: 1;
+            font-size: .95rem;
+            color: var(--encre-douce);
         }
 
         .tags {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 0.4rem;
+            gap: .4rem;
             margin-top: 1rem;
             list-style: none;
         }
 
         .tags li {
-            background: var(--accent-tint);
-            color: var(--accent);
-            font-weight: 600;
-            border-radius: var(--radius-pill);
-            padding: 0.15rem 0.7rem;
-            font-size: 0.75rem;
+            padding: .15rem .7rem;
+            border-radius: var(--pill);
+            background: var(--tint);
+            color: var(--accent-text);
+            font-size: .75rem;
+            font-weight: 700;
         }
 
-        /* Bouton « Ouvrir → » en pilule */
-        .tool-open {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
+        /* Bouton « Ouvrir → » : décoratif, masqué aux lecteurs d'écran
+           (le lien porte déjà le nom de l'outil) */
+        .tool-card::after {
+            content: "Ouvrir →";
+            content: "Ouvrir →" / "";
             margin-top: 1.25rem;
-            padding: 0.4rem 1.1rem;
-            border-radius: var(--radius-pill);
-            background: var(--accent-tint);
-            color: var(--accent);
-            font-weight: 800;
-            font-size: 0.85rem;
-            transition: var(--transition);
+            padding: .4rem 1.1rem;
+            border-radius: var(--pill);
+            background: var(--tint);
+            color: var(--accent-text);
+            font-weight: 700;
+            font-size: .85rem;
+            transition: color var(--ease), background-color var(--ease);
         }
 
-        .tool-card:hover .tool-open {
+        .tool-card:hover::after {
             background: var(--accent);
             color: var(--blanc);
         }
 
-        .tool-open .arrow {
-            display: inline-block;
-            transition: transform 0.3s ease;
-        }
-
-        .tool-card:hover .tool-open .arrow {
-            transform: translateX(3px);
-        }
-
-        /* ---------- Bandeau final + pied de page ---------- */
+        /* ---------- Bandeau final ---------- */
         .closing {
             position: relative;
             overflow: hidden;
+            padding: 5rem 0 2rem;
             background: var(--bleu);
             color: var(--blanc);
-            padding: 5rem 0 2rem;
             text-align: center;
         }
 
-        /* Grands ronds décoratifs, comme des pièces de construction */
         .closing::before,
         .closing::after {
             content: "";
             position: absolute;
             border-radius: 50%;
-            pointer-events: none;
         }
 
         .closing::before {
             width: 26rem;
             height: 26rem;
-            right: -9rem;
             top: -10rem;
-            background: rgba(255, 255, 255, 0.08);
+            right: -9rem;
+            background: rgba(255, 255, 255, .08);
         }
 
         .closing::after {
             width: 16rem;
             height: 16rem;
-            left: -6rem;
             bottom: -8rem;
+            left: -6rem;
             background: var(--rouge);
-            opacity: 0.9;
+            opacity: .9;
         }
 
         .closing .container {
@@ -477,48 +432,44 @@
         }
 
         .closing h2 {
-            margin-top: 0.5rem;
+            margin-top: .5rem;
             font-size: clamp(2rem, 5vw, 3.25rem);
-            font-weight: 700;
-            line-height: 1.05;
         }
 
-        .footer {
+        .closing small {
+            display: block;
             margin-top: 3.5rem;
             padding-top: 1.5rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.85);
+            border-top: 1px solid rgba(255, 255, 255, .2);
+            font-size: .9rem;
+            color: rgba(255, 255, 255, .85);
         }
 
-        /* ---------- Animations d'apparition ---------- */
-        /* Les apparitions utilisent « translate », indépendant de « transform » :
-           les effets de survol restent actifs une fois l'animation terminée */
+        /* ---------- Animations ----------
+           Les apparitions utilisent « translate », indépendant de « transform » :
+           les effets de survol restent actifs une fois l'élément apparu. */
         @keyframes fade-up {
             from { opacity: 0; translate: 0 16px; }
-            to   { opacity: 1; translate: 0 0; }
         }
-
-        .hero-copy > * {
-            animation: fade-up 0.6s ease both;
-        }
-        .hero-copy > :nth-child(2) { animation-delay: 0.08s; }
-        .hero-copy > :nth-child(3) { animation-delay: 0.16s; }
-        .hero-copy > :nth-child(4) { animation-delay: 0.24s; }
-        .hero-copy > :nth-child(5) { animation-delay: 0.32s; }
 
         @keyframes block-in {
             from { opacity: 0; translate: 0 30px; }
-            to   { opacity: 1; translate: 0 0; }
         }
 
-        .block {
-            animation: block-in 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+        @keyframes float {
+            50% { translate: 0 -12px; }
         }
-        .block-2 { animation-delay: 0.12s; }
-        .block-3 { animation-delay: 0.24s; }
 
-        /* Masqué seulement si le JavaScript est actif, pour ne jamais cacher le contenu */
+        .hero-copy > * {
+            animation: fade-up .6s ease backwards;
+        }
+
+        .hero-copy > :nth-child(2) { animation-delay: .08s; }
+        .hero-copy > :nth-child(3) { animation-delay: .16s; }
+        .hero-copy > :nth-child(4) { animation-delay: .24s; }
+        .hero-copy > :nth-child(5) { animation-delay: .32s; }
+
+        /* Masqué seulement si le JavaScript est actif : sans lui, tout reste visible */
         .js .reveal {
             opacity: 0;
             translate: 0 24px;
@@ -527,15 +478,13 @@
         .js .reveal.is-visible {
             opacity: 1;
             translate: 0 0;
-            animation: fade-up 0.6s ease backwards;
+            animation: fade-up .6s ease backwards;
             animation-delay: calc(var(--i, 0) * 80ms);
         }
 
-        /* ---------- Adaptation aux écrans ---------- */
+        /* ---------- Écrans ---------- */
         @media (max-width: 960px) {
-            .tool-card {
-                --cols: 3;
-            }
+            .tool-grid { --cols: 3; }
         }
 
         @media (max-width: 768px) {
@@ -545,8 +494,8 @@
 
             .hero .container {
                 grid-template-columns: 1fr;
-                text-align: center;
                 gap: 2.5rem;
+                text-align: center;
             }
 
             .brand {
@@ -554,8 +503,7 @@
             }
 
             .hero-text {
-                margin-left: auto;
-                margin-right: auto;
+                margin-inline: auto;
             }
 
             .blocks {
@@ -565,22 +513,19 @@
             .tile {
                 width: 4.25rem;
                 height: 4.25rem;
-                font-size: 2rem;
                 border-radius: 18px;
+                font-size: 2rem;
             }
 
             .section {
                 padding: 3.5rem 0;
             }
 
-            .tool-card {
-                --cols: 2;
-            }
+            .tool-grid { --cols: 2; }
 
-            /* Navigation sur une seule ligne, qu'on fait défiler du doigt :
-               sa hauteur reste fixe, les titres ne passent pas dessous */
+            /* Une seule ligne qu'on fait défiler du doigt : hauteur fixe,
+               les titres ne passent pas dessous */
             .quick-nav {
-                flex-wrap: nowrap;
                 justify-content: flex-start;
                 overflow-x: auto;
                 scrollbar-width: none;
@@ -590,34 +535,21 @@
                 display: none;
             }
 
-            .quick-nav a {
-                flex-shrink: 0;
-            }
-
             /* Centre les boutons quand ils tiennent sur la largeur */
-            .quick-nav a:first-child {
-                margin-left: auto;
-            }
-
-            .quick-nav a:last-child {
-                margin-right: auto;
-            }
+            .quick-nav a:first-child { margin-left: auto; }
+            .quick-nav a:last-child  { margin-right: auto; }
         }
 
         @media (max-width: 520px) {
-            .tool-card {
-                --cols: 1;
-            }
+            .tool-grid { --cols: 1; }
         }
 
-        /* À l'impression, tout est visible, sans navigation collante ni décor */
         @media print {
             .js .reveal,
             .js .reveal.is-visible {
                 opacity: 1;
-                translate: 0 0;
+                translate: none;
                 animation: none;
-                transition: none;
             }
 
             .quick-nav {
@@ -637,15 +569,15 @@
             }
 
             *,
-            *::before,
-            *::after {
+            ::before,
+            ::after {
                 animation: none !important;
                 transition: none !important;
             }
 
             .js .reveal {
                 opacity: 1;
-                translate: 0 0;
+                translate: none;
             }
 
             .tool-card:hover,
@@ -663,153 +595,137 @@
         <div class="container">
             <div class="hero-copy">
                 <div class="brand">
-                    <img src="images/Logo_DSDEN76.png" alt="Logo DSDEN76" onerror="this.style.display='none'">
+                    <img src="images/Logo_DSDEN76.png" alt="Logo DSDEN76" onerror="this.remove()">
                     <span class="eyebrow">Apps1D76</span>
                 </div>
-                <h1>Des outils numériques pour <span class="accent">l'école primaire</span></h1>
+                <h1>Des outils numériques pour <span>l'école primaire</span></h1>
                 <p class="hero-text">Des ressources pour la classe, des utilitaires du quotidien, le suivi des élèves et l'organisation de l'école, réunis au même endroit.</p>
                 <p class="hero-mission">Mission Numérique Éducatif 76</p>
-                <a href="#en-classe" class="cta eyebrow">Choisir un outil <span class="arrow" aria-hidden="true">↓</span></a>
+                <a href="#en-classe" class="cta eyebrow">Choisir un outil <span aria-hidden="true">↓</span></a>
             </div>
 
             <div class="blocks" aria-hidden="true">
-                <span class="block block-1"></span>
-                <span class="block block-2"></span>
-                <span class="block block-3"></span>
-                <span class="tile tile-1">📚</span>
-                <span class="tile tile-2">🎲</span>
-                <span class="tile tile-3">🏷️</span>
-                <span class="tile tile-4">📖</span>
+                <span class="block"></span>
+                <span class="block"></span>
+                <span class="block"></span>
+                <span class="tile">📚</span>
+                <span class="tile">🎲</span>
+                <span class="tile">🏷️</span>
+                <span class="tile">📖</span>
             </div>
         </div>
     </header>
 
     <nav class="quick-nav" aria-label="Rubriques">
-        <a href="#en-classe" class="accent-classe">En classe</a>
-        <a href="#outils-classe" class="accent-outils">Outils pour la classe</a>
-        <a href="#suivi" class="accent-suivi">Suivre et évaluer</a>
-        <a href="#direction" class="accent-direction">Direction d'école</a>
+        <a href="#en-classe" class="classe">En classe</a>
+        <a href="#outils-classe" class="outils">Outils pour la classe</a>
+        <a href="#suivi" class="suivi">Suivre et évaluer</a>
+        <a href="#direction" class="direction">Direction d'école</a>
     </nav>
 
     <main>
 
-        <section class="section accent-classe" id="en-classe">
+        <section class="section classe" id="en-classe">
             <div class="container">
                 <div class="section-header">
                     <p class="eyebrow">En classe</p>
-                    <h2 class="section-title">Faire apprendre les élèves</h2>
-                    <p class="section-intro">Des ressources à utiliser en classe, en français, en mathématiques et en langues vivantes.</p>
+                    <h2>Faire apprendre les élèves</h2>
+                    <p>Des ressources à utiliser en classe, en français, en mathématiques et en langues vivantes.</p>
                 </div>
                 <div class="tool-grid">
                     <a href="./prompteurs/index.html" class="tool-card">
                         <span class="tool-icon" aria-hidden="true">▶️</span>
-                        <h3 class="tool-name">Prompteurs de lecture</h3>
-                        <p class="tool-description">Outils d'aide à la lecture avec défilement automatique pour améliorer la fluence.</p>
+                        <h3>Prompteurs de lecture</h3>
+                        <p>Outils d'aide à la lecture avec défilement automatique pour améliorer la fluence.</p>
                         <ul class="tags"><li>Français</li><li>Fluence</li></ul>
-                        <span class="tool-open">Ouvrir <span class="arrow" aria-hidden="true">→</span></span>
                     </a>
-
                     <a href="./Litteranum/index.html" class="tool-card">
                         <span class="tool-icon" aria-hidden="true">📚</span>
-                        <h3 class="tool-name">Littérature et numérique</h3>
-                        <p class="tool-description">Des albums et documentaires pour travailler le numérique en classe.</p>
+                        <h3>Littérature et numérique</h3>
+                        <p>Des albums et documentaires pour travailler le numérique en classe.</p>
                         <ul class="tags"><li>Français</li><li>Numérique</li></ul>
-                        <span class="tool-open">Ouvrir <span class="arrow" aria-hidden="true">→</span></span>
                     </a>
-
                     <a href="./course/index.html" class="tool-card">
                         <span class="tool-icon" aria-hidden="true">🔢</span>
-                        <h3 class="tool-name">Course aux nombres</h3>
-                        <p class="tool-description">Générateur de fiches d'entraînement au calcul de fluence.</p>
+                        <h3>Course aux nombres</h3>
+                        <p>Générateur de fiches d'entraînement au calcul de fluence.</p>
                         <ul class="tags"><li>Mathématiques</li><li>CE1</li></ul>
-                        <span class="tool-open">Ouvrir <span class="arrow" aria-hidden="true">→</span></span>
                     </a>
-
                     <a href="./250consignes/index.html" class="tool-card">
                         <span class="tool-icon" aria-hidden="true">🙋</span>
-                        <h3 class="tool-name">250 consignes en LVE</h3>
-                        <p class="tool-description">250 consignes utilisables en classe en allemand, anglais, espagnol et portugais.</p>
+                        <h3>250 consignes en LVE</h3>
+                        <p>250 consignes utilisables en classe en allemand, anglais, espagnol et portugais.</p>
                         <ul class="tags"><li>Langues vivantes</li></ul>
-                        <span class="tool-open">Ouvrir <span class="arrow" aria-hidden="true">→</span></span>
                     </a>
                 </div>
             </div>
         </section>
 
-        <section class="section accent-outils" id="outils-classe">
+        <section class="section outils" id="outils-classe">
             <div class="container">
                 <div class="section-header">
                     <p class="eyebrow">Outils pour la classe</p>
-                    <h2 class="section-title">Animer la classe au quotidien</h2>
-                    <p class="section-intro">Des utilitaires prêts à l'emploi, pensés pour l'écran numérique interactif.</p>
+                    <h2>Animer la classe au quotidien</h2>
+                    <p>Des utilitaires prêts à l'emploi, pensés pour l'écran numérique interactif.</p>
                 </div>
                 <div class="tool-grid">
                     <a href="./generateur-etiquettes-deplacables/" class="tool-card">
                         <span class="tool-icon" aria-hidden="true">🏷️</span>
-                        <h3 class="tool-name">Générateur d'étiquettes</h3>
-                        <p class="tool-description">Étiquettes déplaçables (textes, images…) pour l'écran numérique interactif.</p>
+                        <h3>Générateur d'étiquettes</h3>
+                        <p>Étiquettes déplaçables (textes, images…) pour l'écran numérique interactif.</p>
                         <ul class="tags"><li>Tous domaines</li><li>ENI</li></ul>
-                        <span class="tool-open">Ouvrir <span class="arrow" aria-hidden="true">→</span></span>
                     </a>
-
                     <a href="./randomizer/index.html" class="tool-card">
                         <span class="tool-icon" aria-hidden="true">🎲</span>
-                        <h3 class="tool-name">Randomizer</h3>
-                        <p class="tool-description">Tirage au sort d'un nom dans une liste importable, avec durée réglable et confettis.</p>
+                        <h3>Randomizer</h3>
+                        <p>Tirage au sort d'un nom dans une liste importable, avec durée réglable et confettis.</p>
                         <ul class="tags"><li>Tirage au sort</li><li>ENI</li></ul>
-                        <span class="tool-open">Ouvrir <span class="arrow" aria-hidden="true">→</span></span>
                     </a>
                 </div>
             </div>
         </section>
 
-        <section class="section accent-suivi" id="suivi">
+        <section class="section suivi" id="suivi">
             <div class="container">
                 <div class="section-header">
                     <p class="eyebrow">Suivre et évaluer</p>
-                    <h2 class="section-title">Suivre les progrès des élèves</h2>
-                    <p class="section-intro">Garder une trace des apprentissages et trouver des ressources pour y répondre.</p>
+                    <h2>Suivre les progrès des élèves</h2>
+                    <p>Garder une trace des apprentissages et trouver des ressources pour y répondre.</p>
                 </div>
                 <div class="tool-grid">
                     <a href="./carnet.html" class="tool-card">
                         <span class="tool-icon" aria-hidden="true">📖</span>
-                        <h3 class="tool-name">Carnet de suivi des apprentissages</h3>
-                        <p class="tool-description">Carnet de suivi des apprentissages de ses élèves, par domaine de compétence.</p>
+                        <h3>Carnet de suivi des apprentissages</h3>
+                        <p>Carnet de suivi des apprentissages de ses élèves, par domaine de compétence.</p>
                         <ul class="tags"><li>Maternelle</li></ul>
-                        <span class="tool-open">Ouvrir <span class="arrow" aria-hidden="true">→</span></span>
                     </a>
-
                     <a href="./evalaide/index.html" class="tool-card">
                         <span class="tool-icon" aria-hidden="true">🔍</span>
-                        <h3 class="tool-name">Éval'aide numérique</h3>
-                        <p class="tool-description">Ressources numériques associées aux compétences des évaluations nationales.</p>
+                        <h3>Éval'aide numérique</h3>
+                        <p>Ressources numériques associées aux compétences des évaluations nationales.</p>
                         <ul class="tags"><li>Français</li><li>Mathématiques</li><li>CP → CM2</li></ul>
-                        <span class="tool-open">Ouvrir <span class="arrow" aria-hidden="true">→</span></span>
                     </a>
                 </div>
             </div>
         </section>
 
-        <section class="section accent-direction" id="direction">
+        <section class="section direction" id="direction">
             <div class="container">
                 <div class="section-header">
                     <p class="eyebrow">Direction d'école</p>
-                    <h2 class="section-title">Organiser la vie de l'école</h2>
-                    <p class="section-intro">Des outils simples pour les plannings et la préparation de la rentrée.</p>
+                    <h2>Organiser la vie de l'école</h2>
+                    <p>Des outils simples pour les plannings et la préparation de la rentrée.</p>
                 </div>
                 <div class="tool-grid">
                     <a href="./outildir/orga_recre.html" class="tool-card">
                         <span class="tool-icon" aria-hidden="true">⏰</span>
-                        <h3 class="tool-name">Planning des récréations</h3>
-                        <p class="tool-description">Qui surveille quand ? Un organiseur de planning simple, avec étiquettes déplaçables.</p>
-                        <span class="tool-open">Ouvrir <span class="arrow" aria-hidden="true">→</span></span>
+                        <h3>Planning des récréations</h3>
+                        <p>Qui surveille quand ? Un organiseur de planning simple, avec étiquettes déplaçables.</p>
                     </a>
-
                     <a href="./outildir/ThunderStruct.html" class="tool-card">
                         <span class="tool-icon" aria-hidden="true">📆</span>
-                        <h3 class="tool-name">Planifier ses classes n+1</h3>
-                        <p class="tool-description">Répartition des élèves dans les classes pour préparer la rentrée scolaire.</p>
-                        <span class="tool-open">Ouvrir <span class="arrow" aria-hidden="true">→</span></span>
+                        <h3>Planifier ses classes n+1</h3>
+                        <p>Répartition des élèves dans les classes pour préparer la rentrée scolaire.</p>
                     </a>
                 </div>
             </div>
@@ -821,43 +737,42 @@
         <div class="container">
             <p class="eyebrow reveal">Et ensuite ?</p>
             <h2 class="reveal">D'autres outils arriveront bientôt !</h2>
-            <p class="footer">Mission Numérique Éducatif 76 • Académie de Normandie - Seine-Maritime (76) • Conçu pour faciliter l'apprentissage</p>
+            <small>Mission Numérique Éducatif 76 • Académie de Normandie - Seine-Maritime (76) • Conçu pour faciliter l'apprentissage</small>
         </div>
     </footer>
 
     <script>
-        // Apparition progressive des cartes et rubriques au défilement
-        const revealables = document.querySelectorAll('.section-header, .tool-card, .closing .reveal');
-        document.querySelectorAll('.tool-grid').forEach(grid => {
-            [...grid.children].forEach((card, i) => card.style.setProperty('--i', i));
-        });
-        revealables.forEach(el => el.classList.add('reveal'));
+        (() => {
+            const revealables = document.querySelectorAll('.section-header, .tool-card, .closing .reveal');
+            const reveal = el => el.classList.add('is-visible');
 
-        if ('IntersectionObserver' in window) {
-            const revealObserver = new IntersectionObserver(entries => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                        revealObserver.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.1 });
+            document.querySelectorAll('.tool-grid').forEach(grid =>
+                [...grid.children].forEach((card, i) => card.style.setProperty('--i', i)));
+            revealables.forEach(el => el.classList.add('reveal'));
+
+            if (!('IntersectionObserver' in window)) {
+                revealables.forEach(reveal);
+                return;
+            }
+
+            // Apparition progressive au défilement
+            const revealObserver = new IntersectionObserver(entries => entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    reveal(entry.target);
+                    revealObserver.unobserve(entry.target);
+                }
+            }), { threshold: .1 });
             revealables.forEach(el => revealObserver.observe(el));
 
-            // Met en surbrillance la rubrique affichée dans la navigation
+            // Surligne dans la navigation la rubrique affichée
             const navLinks = document.querySelectorAll('.quick-nav a');
-            const sectionObserver = new IntersectionObserver(entries => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        navLinks.forEach(link => link.classList.toggle(
-                            'is-active', link.getAttribute('href') === '#' + entry.target.id));
-                    }
-                });
-            }, { rootMargin: '-40% 0px -55% 0px' });
+            const sectionObserver = new IntersectionObserver(entries => entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    navLinks.forEach(link => link.classList.toggle('is-active', link.hash === '#' + entry.target.id));
+                }
+            }), { rootMargin: '-40% 0px -55% 0px' });
             document.querySelectorAll('.section').forEach(section => sectionObserver.observe(section));
-        } else {
-            revealables.forEach(el => el.classList.add('is-visible'));
-        }
+        })();
     </script>
 </body>
 </html>
